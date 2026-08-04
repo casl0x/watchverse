@@ -1,7 +1,24 @@
-export default function Home() {
+import MediaSection from "@/components/wv-ui/MediaSection";
+import { tmdb } from "@/lib/tmdb";
+
+export default async function Home() {
+  const [movies, shows] = await Promise.all([
+    tmdb.trendingMovies(),
+    tmdb.trendingShows(),
+  ]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center font-sans bg-background">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16   sm:items-start"></main>
-    </div>
+    <main className="min-h-screen bg-[#1a1025] space-y-6 py-6">
+      <MediaSection
+        title="Films tendance"
+        items={movies.results}
+        type="movies"
+      />
+      <MediaSection
+        title="Séries tendance"
+        items={shows.results}
+        type="series"
+      />
+    </main>
   );
 }
