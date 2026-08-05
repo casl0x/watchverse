@@ -22,12 +22,11 @@ export default function MediaSection({ title, items, type }: Props) {
 
       <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-hide">
         {items.map((item, index) => {
-          console.log('👉 item id:', item.id, '| lien:', `/${type}/${item.id}`); // 👈
           return (
             <Link key={item.id} href={`/${type}/${item.id}`}>
               <div
                 className={`
-                  relative flex-shrink-0 rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 w-32 h-48
+                  relative shrink-0 rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 w-32 h-48
                 `}
               >
                 {/* Poster */}
@@ -38,7 +37,7 @@ export default function MediaSection({ title, items, type }: Props) {
                 />
 
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
 
                 {/* Infos */}
                 <div className="absolute bottom-0 left-0 right-0 p-2">

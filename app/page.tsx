@@ -8,7 +8,7 @@ export default async function Home() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[#1a1025] space-y-6 py-6">
+    <main className="min-h-screen space-y-6 py-6 w-4xl mx-auto">
       <MediaSection
         title="Films tendance"
         items={movies.results}
