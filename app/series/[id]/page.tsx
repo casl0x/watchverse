@@ -50,9 +50,8 @@ export default async function ShowPage({
           <Image
             src={img(show.poster_path)}
             alt={show.name}
-            width={160}
+            width={200}
             height={240}
-            className="w-40 rounded-lg shadow shrink-0"
           />
           <div>
             <h1 className="text-3xl font-bold">{show.name}</h1>

@@ -47,9 +47,11 @@ export default async function MoviePage({
 
       <div className="p-6 max-w-4xl mx-auto space-y-6">
         <div className="flex gap-6">
-          <img
+          <Image
             src={img(movie.poster_path)}
-            className="w-40 rounded-lg shadow"
+            alt={`${movie.title} poster`}
+            width={200}
+            height={240}
           />
           <div>
             <h1 className="text-3xl font-bold">{movie.title}</h1>
@@ -90,7 +92,7 @@ export default async function MoviePage({
           <h2 className="text-xl font-bold mb-2">Casting</h2>
           <div className="flex gap-3 overflow-x-auto">
             {credits.cast.slice(0, 10).map((actor: CastMember) => (
-              <div key={actor.id} className="min-w-[100px] text-center">
+              <div key={actor.id} className="min-w-25 text-center">
                 {actor.profile_path ? (
                   <Image
                     src={img(actor.profile_path, "w185")}
