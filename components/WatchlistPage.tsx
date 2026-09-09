@@ -302,6 +302,11 @@ export default function WatchlistPage({ watchlist }: { watchlist: Watchlist }) {
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="truncate font-medium text-wv-text">
                           {item.title}
+                          {item.episode_label && (
+                            <span className="ml-1.5 font-normal text-wv-text2">
+                              — {item.episode_label}
+                            </span>
+                          )}
                         </span>
                         <span className="inline-flex items-center gap-1 rounded-full border border-wv-border px-1.5 py-0.5 text-[11px] text-wv-text3">
                           <TypeIcon className="h-3 w-3" />
