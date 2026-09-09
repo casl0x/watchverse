@@ -1,24 +1,5 @@
-import MediaSection from "@/components/wv-ui/MediaSection";
-import { tmdb } from "@/lib/tmdb";
+import { redirect } from "next/navigation";
 
-export default async function Home() {
-  const [movies, shows] = await Promise.all([
-    tmdb.trendingMovies(),
-    tmdb.trendingShows(),
-  ]);
-
-  return (
-    <main className="min-h-screen space-y-6 py-6 w-4xl mx-auto">
-      <MediaSection
-        title="Films tendance"
-        items={movies.results}
-        type="movies"
-      />
-      <MediaSection
-        title="Séries tendance"
-        items={shows.results}
-        type="series"
-      />
-    </main>
-  );
+export default function Home() {
+  redirect("/watchlists");
 }

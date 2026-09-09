@@ -93,3 +93,19 @@
       );
   }
 }
+
+/* ── Watchlists feature palette ── */
+@theme inline {
+  --color-wv-bg: #07070f;
+  --color-wv-surface: #0f0f1c;
+  --color-wv-surface2: #161628;
+  --color-wv-border: rgb(120 100 255 / 0.12);
+  --color-wv-accent: #7b5cfa;
+  --color-wv-accent2: #a78bfa;
+  --color-wv-text: #e8e4f8;
+  --color-wv-text2: #9490b8;
+  --color-wv-text3: #5d5a7a;
+  --color-wv-watched: #22c55e;
+  --color-wv-gold: #f59e0b;
+  --font-heading: var(--font-space-grotesk);
+}
