@@ -109,7 +109,9 @@ export default function WatchlistsGrid({
       <section className="mx-auto max-w-6xl px-4 pb-16">
         {filtered.length === 0 ? (
           <p className="rounded-lg border border-wv-border bg-wv-surface px-4 py-10 text-center text-sm text-wv-text2">
-            Aucune watchlist ne correspond à « {query} ».
+            {watchlists.length === 0
+              ? "Aucune watchlist disponible pour le moment."
+              : `Aucune watchlist ne correspond à « ${query} ».`}
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

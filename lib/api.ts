@@ -95,13 +95,23 @@ export async function getWatchlists(): Promise<Watchlist[]> {
     return MOCK_WATCHLISTS;
   }
 
-  const res = await fetch(`${API_BASE}/api/watchlists`, {
-    next: { revalidate: 60 },
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to fetch watchlists: ${res.status}`);
+  try {
+    const res = await fetch(`${API_BASE}/api/watchlists`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) {
+      console.error(`Failed to fetch watchlists: ${res.status}`);
+      return [];
+    }
+    return await res.json();
+  } catch (err) {
+    // A transient upstream failure shouldn't be able to take down the
+    // whole build (generateStaticParams / static generation) or crash a
+    // request — degrade to an empty list instead, and self-heal on the
+    // next revalidation once the API is healthy again.
+    console.error("Failed to fetch watchlists:", err);
+    return [];
   }
-  return res.json();
 }
 
 export async function getWatchlist(slug: string): Promise<Watchlist | null> {
@@ -109,14 +119,20 @@ export async function getWatchlist(slug: string): Promise<Watchlist | null> {
     return MOCK_WATCHLISTS.find((wl) => wl.slug === slug) ?? null;
   }
 
-  const res = await fetch(`${API_BASE}/api/watchlists/${slug}`, {
-    next: { revalidate: 60 },
-  });
-  if (res.status === 404) return null;
-  if (!res.ok) {
-    throw new Error(`Failed to fetch watchlist "${slug}": ${res.status}`);
+  try {
+    const res = await fetch(`${API_BASE}/api/watchlists/${slug}`, {
+      next: { revalidate: 60 },
+    });
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      console.error(`Failed to fetch watchlist "${slug}": ${res.status}`);
+      return null;
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(`Failed to fetch watchlist "${slug}":`, err);
+    return null;
   }
-  return res.json();
 }
 
 export function getTotalMinutes(items: Pick<WatchItem, "duration">[]): number {
