@@ -2,6 +2,11 @@ import type { Watchlist, WatchItem } from "@/types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
+// Mock data is used in development, and also as a fallback wherever the
+// real API isn't configured yet (e.g. a preview deploy with no
+// NEXT_PUBLIC_API_URL set) so builds and pages don't crash on a missing env var.
+const USE_MOCK = process.env.NODE_ENV === "development" || !API_BASE;
+
 const MOCK_WATCHLISTS: Watchlist[] = [
   {
     id: "wl-cinema-auteur",
@@ -86,7 +91,7 @@ const MOCK_WATCHLISTS: Watchlist[] = [
 ];
 
 export async function getWatchlists(): Promise<Watchlist[]> {
-  if (process.env.NODE_ENV === "development") {
+  if (USE_MOCK) {
     return MOCK_WATCHLISTS;
   }
 
@@ -100,7 +105,7 @@ export async function getWatchlists(): Promise<Watchlist[]> {
 }
 
 export async function getWatchlist(slug: string): Promise<Watchlist | null> {
-  if (process.env.NODE_ENV === "development") {
+  if (USE_MOCK) {
     return MOCK_WATCHLISTS.find((wl) => wl.slug === slug) ?? null;
   }
 
