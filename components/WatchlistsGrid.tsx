@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { Clock, Layers, ListChecks, Search } from "lucide-react";
+import { ChevronDown, Clock, Layers, ListChecks, Search } from "lucide-react";
 import type { Watchlist } from "@/types";
 import { useWatchedProgress } from "@/hooks/useWatchedProgress";
 import { formatHoursLabel, getTotalMinutes } from "@/lib/api";
@@ -109,7 +109,9 @@ export default function WatchlistsGrid({
       <section className="mx-auto max-w-6xl px-4 pb-16">
         {filtered.length === 0 ? (
           <p className="rounded-lg border border-wv-border bg-wv-surface px-4 py-10 text-center text-sm text-wv-text2">
-            Aucune watchlist ne correspond à « {query} ».
+            {watchlists.length === 0
+              ? "Aucune watchlist disponible pour le moment."
+              : `Aucune watchlist ne correspond à « ${query} ».`}
           </p>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -127,9 +129,54 @@ export default function WatchlistsGrid({
           </div>
         )}
       </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-16">
+        <h2 className="font-heading text-xl font-semibold text-wv-text">
+          Questions fréquentes
+        </h2>
+        <div className="mt-4 divide-y divide-wv-border rounded-lg border border-wv-border bg-wv-surface">
+          {FAQ_ITEMS.map((item) => (
+            <details key={item.question} className="group px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium text-wv-text [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wv-accent/40">
+                {item.question}
+                <ChevronDown className="h-4 w-4 shrink-0 text-wv-text3 transition-transform group-open:rotate-180" />
+              </summary>
+              <p className="mt-2 text-sm text-wv-text2">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
+
+const FAQ_ITEMS: { question: string; answer: string }[] = [
+  {
+    question: "Comment fonctionne le suivi de progression ?",
+    answer:
+      "Ta progression est enregistrée directement dans ton navigateur, sans compte à créer. Elle reste donc propre à cet appareil : si tu changes de navigateur ou d'appareil, ou si tu vides les données de navigation, elle repart à zéro.",
+  },
+  {
+    question: "Que signifie le badge ★ Essentiel ?",
+    answer:
+      "Il indique les titres incontournables pour suivre l'histoire principale d'une watchlist. Les titres Recommandé ou Optionnel apportent du contexte mais peuvent être passés si tu es pressé.",
+  },
+  {
+    question: "Que veut dire « Saison 1 » ou « Ép. 1 à 3 » à côté d'un titre ?",
+    answer:
+      "Certaines watchlists suivent un ordre chronologique précis et ne recommandent qu'une partie d'une série (une saison ou une plage d'épisodes) plutôt que la série entière.",
+  },
+  {
+    question: "Comment trier ou filtrer les titres d'une watchlist ?",
+    answer:
+      "Sur la page d'une watchlist, utilise les filtres Type / Statut / Importance dans le menu latéral, et le bouton « Trier » pour alterner entre l'ordre recommandé, l'ordre alphabétique et l'année.",
+  },
+  {
+    question: "Comment sont choisies les watchlists ?",
+    answer:
+      "Elles sont sélectionnées et mises à jour manuellement par l'équipe WatchVerse.",
+  },
+];
 
 function StatTile({
   icon,
