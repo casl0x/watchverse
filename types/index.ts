@@ -5,7 +5,7 @@ export interface WatchItem {
   id: string;
   title: string;
   type: ItemType;
-  importance: Importance;
+  importance?: Importance | null;
   year?: number | null;
   duration?: number | null; // minutes
   platform?: string | null;
